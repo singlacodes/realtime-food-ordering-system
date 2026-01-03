@@ -1,38 +1,49 @@
 import User from "../models/user.model.js"
 import bcrypt, { hash } from "bcryptjs"
 import genToken from "../utils/token.js"
-import { sendOtpMail } from "../utils/mail.js"
-export const signUp=async (req,res) => {
+// import { sendOtpMail } from "../utils/mail.js"  <-- OTP IMPORT COMMENTED OUT
+
+export const signUp = async (req, res) => {
     try {
-        const {fullName,email,password,mobile,role}=req.body
-        let user=await User.findOne({email})
-        if(user){
-            return res.status(400).json({message:"User Already exist."})
+        const { fullName, email, password, mobile, role } = req.body
+        
+        // Check if user already exists
+        let user = await User.findOne({ email })
+        if (user) {
+            return res.status(400).json({ message: "User Already exist." })
         }
-        if(password.length<6){
-            return res.status(400).json({message:"password must be at least 6 characters."})
+        
+        // Basic Validation
+        if (password.length < 6) {
+            return res.status(400).json({ message: "password must be at least 6 characters." })
         }
-        if(mobile.length<10){
-            return res.status(400).json({message:"mobile no must be at least 10 digits."})
+        if (mobile.length < 10) {
+            return res.status(400).json({ message: "mobile no must be at least 10 digits." })
         }
-     
-        const hashedPassword=await bcrypt.hash(password,10)
-        user=await User.create({
+
+        // Hash the password for security
+        const hashedPassword = await bcrypt.hash(password, 10)
+        
+        // Create new user in Database
+        user = await User.create({
             fullName,
             email,
             role,
             mobile,
-            password:hashedPassword
+            password: hashedPassword
         })
 
-        const token=await genToken(user._id)
-        res.cookie("token",token,{
-            secure:false,
-            sameSite:"strict",
-            maxAge:7*24*60*60*1000,
-            httpOnly:true
+        // Generate JWT Token
+        const token = await genToken(user._id)
+        
+        // Set Token in HTTP-Only Cookie
+        res.cookie("token", token, {
+            secure: false, // Set to true in production (https)
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+            httpOnly: true
         })
-  
+
         return res.status(201).json(user)
 
     } catch (error) {
@@ -40,27 +51,31 @@ export const signUp=async (req,res) => {
     }
 }
 
-export const signIn=async (req,res) => {
+export const signIn = async (req, res) => {
     try {
-        const {email,password}=req.body
-        const user=await User.findOne({email})
-        if(!user){
-            return res.status(400).json({message:"User does not exist."})
-        }
+        const { email, password } = req.body
         
-     const isMatch=await bcrypt.compare(password,user.password)
-     if(!isMatch){
-         return res.status(400).json({message:"incorrect Password"})
-     }
+        // Find user by email
+        const user = await User.findOne({ email })
+        if (!user) {
+            return res.status(400).json({ message: "User does not exist." })
+        }
 
-        const token=await genToken(user._id)
-        res.cookie("token",token,{
-            secure:false,
-            sameSite:"strict",
-            maxAge:7*24*60*60*1000,
-            httpOnly:true
+        // Compare entered password with hashed password in DB
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) {
+            return res.status(400).json({ message: "incorrect Password" })
+        }
+
+        // Generate Token and Set Cookie
+        const token = await genToken(user._id)
+        res.cookie("token", token, {
+            secure: false,
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            httpOnly: true
         })
-  
+
         return res.status(200).json(user)
 
     } catch (error) {
@@ -68,14 +83,19 @@ export const signIn=async (req,res) => {
     }
 }
 
-export const signOut=async (req,res) => {
+export const signOut = async (req, res) => {
     try {
+        // Clear the cookie to log user out
         res.clearCookie("token")
-return res.status(200).json({message:"log out successfully"})
+        return res.status(200).json({ message: "log out successfully" })
     } catch (error) {
         return res.status(500).json(`sign out error ${error}`)
     }
 }
+
+/* ---------------------------------------------------
+OTP AND RESET PASSWORD LOGIC (COMMENTED OUT)
+---------------------------------------------------
 
 export const sendOtp=async (req,res) => {
   try {
@@ -129,29 +149,32 @@ export const resetPassword=async (req,res) => {
          return res.status(500).json(`reset password error ${error}`)
     }
 }
+*/
 
-export const googleAuth=async (req,res) => {
+export const googleAuth = async (req, res) => {
     try {
-        const {fullName,email,mobile,role}=req.body
-        let user=await User.findOne({email})
-        if(!user){
-            user=await User.create({
-                fullName,email,mobile,role
+        const { fullName, email, mobile, role } = req.body
+        
+        // Check if user exists, if not create them
+        let user = await User.findOne({ email })
+        if (!user) {
+            user = await User.create({
+                fullName, email, mobile, role
             })
         }
 
-        const token=await genToken(user._id)
-        res.cookie("token",token,{
-            secure:false,
-            sameSite:"strict",
-            maxAge:7*24*60*60*1000,
-            httpOnly:true
+        // Generate Token and Set Cookie
+        const token = await genToken(user._id)
+        res.cookie("token", token, {
+            secure: false,
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            httpOnly: true
         })
-  
+
         return res.status(200).json(user)
 
-
     } catch (error) {
-         return res.status(500).json(`googleAuth error ${error}`)
+        return res.status(500).json(`googleAuth error ${error}`)
     }
 }
