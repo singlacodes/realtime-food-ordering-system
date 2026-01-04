@@ -5,6 +5,8 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 import axios from "axios"
 import { serverUrl } from '../App';
@@ -34,10 +36,18 @@ function SignIn() {
            setLoading(false)
         }
      }
-      const handleGoogleAuth = () => {
-        // Logic to be added later
-        console.log("Google Auth Button Clicked");
-    }
+      const handleGoogleAuth=async () => {
+             const provider=new GoogleAuthProvider()
+             const result=await signInWithPopup(auth,provider)
+       try {
+         const {data}=await axios.post(`${serverUrl}/api/auth/google-auth`,{
+             email:result.user.email,
+         },{withCredentials:true})
+         console.log("signed in successfully")
+       } catch (error) {
+         console.log(error)
+       }
+          }
     return (
         <div className='min-h-screen w-full flex items-center justify-center p-4' style={{ backgroundColor: bgColor }}>
             <div className={`bg-white rounded-xl shadow-lg w-full max-w-md p-8 border-[1px] `} style={{

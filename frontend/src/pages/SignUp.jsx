@@ -5,6 +5,8 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import { serverUrl } from '../App';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 function SignUp() {
     const primaryColor = "#ff4d2d";
@@ -42,10 +44,23 @@ function SignUp() {
         }
     }
 
-    const handleGoogleAuth = () => {
-        // Logic to be added later
-        console.log("Google Auth Button Clicked");
-    }
+    const handleGoogleAuth=async () => {
+        if(!mobile){
+          return setErr("mobile no is required")
+        }
+        const provider=new GoogleAuthProvider()
+        const result=await signInWithPopup(auth,provider)
+  try {
+    const {data}=await axios.post(`${serverUrl}/api/auth/google-auth`,{
+        fullName:result.user.displayName,
+        email:result.user.email,
+        role,
+        mobile
+    },{withCredentials:true})
+  } catch (error) {
+    console.log(error)
+  }
+     }
 
     return (
         <div className='min-h-screen w-full flex items-center justify-center p-4' style={{ backgroundColor: bgColor }}>
