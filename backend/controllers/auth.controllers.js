@@ -1,7 +1,7 @@
 import User from "../models/user.model.js"
 import bcrypt, { hash } from "bcryptjs"
 import genToken from "../utils/token.js"
-// import { sendOtpMail } from "../utils/mail.js"  <-- OTP IMPORT COMMENTED OUT
+ import { sendOtpMail } from "../utils/mail.js"  
 
 export const signUp = async (req, res) => {
     try {
@@ -92,11 +92,6 @@ export const signOut = async (req, res) => {
         return res.status(500).json(`sign out error ${error}`)
     }
 }
-
-/* ---------------------------------------------------
-OTP AND RESET PASSWORD LOGIC (COMMENTED OUT)
----------------------------------------------------
-
 export const sendOtp=async (req,res) => {
   try {
     const {email}=req.body
@@ -149,7 +144,6 @@ export const resetPassword=async (req,res) => {
          return res.status(500).json(`reset password error ${error}`)
     }
 }
-*/
 
 export const googleAuth = async (req, res) => {
     try {
