@@ -43,6 +43,7 @@ function SignIn() {
          const {data}=await axios.post(`${serverUrl}/api/auth/google-auth`,{
              email:result.user.email,
          },{withCredentials:true})
+         console.log("signed in google auth")
     
        } catch (error) {
          console.log(error)
