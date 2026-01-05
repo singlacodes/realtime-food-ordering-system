@@ -9,7 +9,6 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 
-
 import axios from "axios"
 import { serverUrl } from '../App';
 
@@ -57,7 +56,7 @@ function SignIn() {
                 border: `1px solid ${borderColor}`
             }}>
                 <h1 className={`text-3xl font-bold mb-2 `} style={{ color: primaryColor }}>Vingo</h1>
-                <p className='text-gray-600 mb-8'> Sign In to your account to get started with delicious food deliveries
+                <p className='text-gray-600 mb-8'>Sign In to your account to get started with delicious food deliveries
                 </p>
 
               
@@ -96,5 +95,4 @@ function SignIn() {
         </div>
     )
 }
-
 export default SignIn
