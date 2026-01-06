@@ -57,8 +57,9 @@ function SignUp() {
         role,
         mobile
     },{withCredentials:true})
+    setErr("")
   } catch (error) {
-    console.log(error)
+    setErr(error?.response?.data?.message || "An error occurred")
   }
      }
 
