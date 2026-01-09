@@ -67,12 +67,12 @@ const [loading,setLoading]=useState(false)
           <div>
  <div className='mb-6'>
                     <label htmlFor="email" className='block text-gray-700 font-medium mb-1'>Email</label>
-                    <input type="email" className='w-full border-[1px] border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Enter your Email' onChange={(e)=>setEmail(e.target.value)} value={email} required/>
+                    <input type="email" className='w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Enter your Email' onChange={(e)=>setEmail(e.target.value)} value={email} required/>
                 </div>
                 <button className={`w-full font-semibold py-2 rounded-lg transition duration-200 bg-[#ff4d2d] text-white hover:bg-[#e64323] cursor-pointer`} onClick={handleSendOtp} disabled={loading}>
                 {loading?<ClipLoader size={20} color='white'/>:"Send Otp"}
             </button>
-                 {err && <p className='text-red-500 text-center my-[10px]'>*{err}</p>}
+                 {err && <p className='text-red-500 text-center my-2.5'>*{err}</p>}
           </div>}
 
          {step == 2
@@ -80,28 +80,28 @@ const [loading,setLoading]=useState(false)
           <div>
  <div className='mb-6'>
                     <label htmlFor="email" className='block text-gray-700 font-medium mb-1'>OTP</label>
-                    <input type="email" className='w-full border-[1px] border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Enter OTP' onChange={(e)=>setOtp(e.target.value)} value={otp} required/>
+                    <input type="email" className='w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Enter OTP' onChange={(e)=>setOtp(e.target.value)} value={otp} required/>
                 </div>
                 <button className={`w-full font-semibold py-2 rounded-lg transition duration-200 bg-[#ff4d2d] text-white hover:bg-[#e64323] cursor-pointer`} onClick={handleVerifyOtp} disabled={loading}>
                 {loading?<ClipLoader size={20} color='white'/>:"Verify"}
             </button>
-                {err && <p className='text-red-500 text-center my-[10px]'>*{err}</p>}
+                {err && <p className='text-red-500 text-center my-2.5'>*{err}</p>}
           </div>}
           {step == 3
           &&
           <div>
  <div className='mb-6'>
                     <label htmlFor="newPassword" className='block text-gray-700 font-medium mb-1'>New Password</label>
-                    <input type="email" className='w-full border-[1px] border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Enter New Password' onChange={(e)=>setNewPassword(e.target.value)} value={newPassword}/>
+                    <input type="email" className='w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Enter New Password' onChange={(e)=>setNewPassword(e.target.value)} value={newPassword}/>
                 </div>
                 <div className='mb-6'>
                     <label htmlFor="ConfirmPassword" className='block text-gray-700 font-medium mb-1'>Confirm Password</label>
-                    <input type="email" className='w-full border-[1px] border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Confirm Password' onChange={(e)=>setConfirmPassword(e.target.value)} value={confirmPassword} required/>
+                    <input type="email" className='w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none  ' placeholder='Confirm Password' onChange={(e)=>setConfirmPassword(e.target.value)} value={confirmPassword} required/>
                 </div>
                 <button className={`w-full font-semibold py-2 rounded-lg transition duration-200 bg-[#ff4d2d] text-white hover:bg-[#e64323] cursor-pointer`} onClick={handleResetPassword} disabled={loading}>
                 {loading?<ClipLoader size={20} color='white'/>:"Reset Password"}
             </button>
-                {err && <p className='text-red-500 text-center my-[10px]'>*{err}</p>}
+                {err && <p className='text-red-500 text-center my-2.5'>*{err}</p>}
           </div>}
       </div>
     </div>
