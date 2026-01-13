@@ -55,7 +55,6 @@ setRightButton(element.scrollLeft+element.clientWidth<element.scrollWidth)
 
 
 
-
   useEffect(()=>{
     if(cateScrollRef.current){
       updateButton(cateScrollRef,setShowLeftCateButton,setShowRightCateButton)
