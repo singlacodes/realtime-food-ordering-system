@@ -3,7 +3,7 @@ import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { CiTrash } from "react-icons/ci";
 import { useDispatch } from 'react-redux';
-
+import { removeCartItem, updateQuantity } from '../redux/userSlice';
 function CartItemCard({data}) {
     const dispatch=useDispatch()
     const handleIncrease=(id,currentQty)=>{
