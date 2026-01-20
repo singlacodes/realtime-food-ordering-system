@@ -2,6 +2,13 @@ import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
+import CreateEditShop from './pages/CreateEditShop'
+import AddItem from './pages/AddItem'
+import EditItem from './pages/EditItem'
+import CartPage from './pages/CartPage'
+import CheckOut from './pages/CheckOut'
+import OrderPlaced from './pages/OrderPlaced'
+import MyOrders from './pages/MyOrders'
 
 import ForgotPassword from './pages/ForgotPassword'
 import useGetCurrentUser from './hooks/useGetCurrentUser'
@@ -25,6 +32,8 @@ function App() {
       <Route path='/edit-item/:itemId' element={userData?<EditItem/>:<Navigate to={"/signin"}/>}/>
       <Route path='/cart' element={userData?<CartPage/>:<Navigate to={"/signin"}/>}/>
       <Route path='/checkout' element={userData?<CheckOut/>:<Navigate to={"/signin"}/>}/>
+      <Route path='/order-placed' element={userData?<OrderPlaced/>:<Navigate to={"/signin"}/>}/>
+      <Route path='/my-orders' element={userData?<MyOrders/>:<Navigate to={"/signin"}/>}/>
 
     </Routes>
   )
