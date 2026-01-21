@@ -566,20 +566,6 @@ todaysDeliveries.forEach(shopOrder=>{
     stats[hour]=(stats[hour] || 0) + 1
 })
 
-let formattedStats=Object.keys(stats).map(hour=>({
- hour:parseInt(hour),
- count:stats[hour]   
-}))
-
-formattedStats.sort((a,b)=>a.hour-b.hour)
-
-return res.status(200).json(formattedStats)
-  
-
-    } catch (error) {
-        return res.status(500).json({ message: `today deliveries error ${error}` }) 
-    }
-}
 
 
 
