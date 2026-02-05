@@ -155,34 +155,3 @@ export const searchItems=async (req,res) => {
          return res.status(500).json({ message: `search item  error ${error}` })
     }
 }
-
-
-export const rating=async (req,res) => {
-    try {
-        const {itemId,rating}=req.body
-
-        if(!itemId || !rating){
-            return res.status(400).json({message:"itemId and rating is required"})
-        }
-
-        if(rating<1 || rating>5){
-             return res.status(400).json({message:"rating must be between 1 to 5"})
-        }
-
-        const item=await Item.findById(itemId)
-        if(!item){
-              return res.status(400).json({message:"item not found"})
-        }
-
-        const newCount=item.rating.count + 1
-        const newAverage=(item.rating.average*item.rating.count + rating)/newCount
-
-        item.rating.count=newCount
-        item.rating.average=newAverage
-        await item.save()
-return res.status(200).json({rating:item.rating})
-
-    } catch (error) {
-         return res.status(500).json({ message: `rating error ${error}` })
-    }
-}
