@@ -3,6 +3,14 @@ import bcrypt, { hash } from "bcryptjs"
 import genToken from "../utils/token.js"
  import { sendOtpMail } from "../utils/mail.js"  
 
+// Cookie configuration for production/development
+const getCookieOptions = () => ({
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true
+})
+
 export const signUp = async (req, res) => {
     try {
         const { fullName, email, password, mobile, role } = req.body
@@ -38,8 +46,8 @@ export const signUp = async (req, res) => {
         
         // Set Token in HTTP-Only Cookie
         res.cookie("token", token, {
-            secure: false, // Set to true in production (https)
-            sameSite: "strict",
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
             httpOnly: true
         })
@@ -69,12 +77,7 @@ export const signIn = async (req, res) => {
 
         // Generate Token and Set Cookie
         const token = await genToken(user._id)
-        res.cookie("token", token, {
-            secure: false,
-            sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-            httpOnly: true
-        })
+        res.cookie("token", token, getCookieOptions())
 
         return res.status(200).json(user)
 
@@ -159,12 +162,7 @@ export const googleAuth = async (req, res) => {
 
         // Generate Token and Set Cookie
         const token = await genToken(user._id)
-        res.cookie("token", token, {
-            secure: false,
-            sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-            httpOnly: true
-        })
+        res.cookie("token", token, getCookieOptions())
 
         return res.status(200).json(user)
 
