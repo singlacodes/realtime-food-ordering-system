@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
-import { serverUrl } from '../App'
 import { useDispatch, useSelector } from 'react-redux'
-import {  setCurrentAddress, setCurrentCity, setCurrentState, setUserData } from '../redux/userSlice'
+import {  setCurrentAddress, setCurrentCity, setCurrentState } from '../redux/userSlice'
 import { setAddress, setLocation } from '../redux/mapSlice'
 
 function useGetCity() {
@@ -38,7 +37,7 @@ if(navigator.geolocation) {
 } else {
     console.error('Geolocation is not supported by this browser.')
 }
-    },[userData])
+    },[userData, dispatch, apiKey])
 }
 
 export default useGetCity

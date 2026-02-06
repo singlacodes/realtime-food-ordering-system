@@ -2,8 +2,7 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { serverUrl } from '../App'
 import { useDispatch, useSelector } from 'react-redux'
-import { setMyOrders, setUserData } from '../redux/userSlice'
-import { setMyShopData } from '../redux/ownerSlice'
+import { setMyOrders } from '../redux/userSlice'
 
 function useGetMyOrders() {
     const dispatch=useDispatch()
@@ -17,14 +16,14 @@ function useGetMyOrders() {
 
 
     } catch (error) {
-        
+        console.error('Error fetching orders:', error)
     }
 }
   fetchOrders()
 
  
   
-  },[userData])
+  },[userData, dispatch])
 }
 
 export default useGetMyOrders

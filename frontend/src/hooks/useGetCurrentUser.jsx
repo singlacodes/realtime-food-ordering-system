@@ -13,12 +13,12 @@ function useGetCurrentUser() {
             dispatch(setUserData(result.data))
   
     } catch (error) {
-        
+        console.error('Error fetching current user:', error)
     }
 }
 fetchUser()
  
-  },[])
+  },[dispatch])
 }
 
 export default useGetCurrentUser

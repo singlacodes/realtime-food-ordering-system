@@ -18,9 +18,9 @@ const {cartItems}=useSelector(state=>state.user)
         for (let i = 1; i <= 5; i++) {
            stars.push(
             (i<=rating)?(
-                <FaStar className='text-yellow-500 text-lg'/>
+                <FaStar key={i} className='text-yellow-500 text-lg'/>
             ):(
-                <FaRegStar className='text-yellow-500 text-lg'/>
+                <FaRegStar key={i} className='text-yellow-500 text-lg'/>
             )
            )
             

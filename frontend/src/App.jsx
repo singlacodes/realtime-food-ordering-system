@@ -25,6 +25,7 @@ import { useEffect } from 'react'
 import { io } from 'socket.io-client'
 import { setSocket } from './redux/userSlice'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const serverUrl=import.meta.env.VITE_SERVER_URL
 function App() {
     const {userData}=useSelector(state=>state.user)
@@ -48,7 +49,8 @@ if(userData){
 return ()=>{
   socketInstance.disconnect()
 }
-  },[userData?._id])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[userData?._id, dispatch])
 
   return (
    <Routes>

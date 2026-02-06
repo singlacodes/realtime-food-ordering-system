@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosSearch } from "react-icons/io";
 import { FiShoppingCart } from "react-icons/fi";
@@ -20,21 +20,21 @@ function Nav() {
     const navigate=useNavigate()
     const handleLogOut = async () => {
         try {
-            const result = await axios.get(`${serverUrl}/api/auth/signout`, { withCredentials: true })
+            await axios.get(`${serverUrl}/api/auth/signout`, { withCredentials: true })
             dispatch(setUserData(null))
         } catch (error) {
-            
+            console.error('Error logging out:', error)
         }
     }
 
-    const handleSearchItems=async () => {
+    const handleSearchItems = useCallback(async () => {
       try {
         const result=await axios.get(`${serverUrl}/api/item/search-items?query=${query}&city=${currentCity}`,{withCredentials:true})
     dispatch(setSearchItems(result.data))
       } catch (error) {
-        
+        console.error('Error searching items:', error)
       }
-    }
+    }, [query, currentCity, dispatch])
 
     useEffect(()=>{
         if(query){
@@ -43,7 +43,7 @@ handleSearchItems()
               dispatch(setSearchItems(null))
         }
 
-    },[query])
+    },[query, dispatch, handleSearchItems])
     return (
         <div className='w-full h-20 flex items-center justify-between md:justify-center gap-[30px] px-[20px] fixed top-0 z-[9999] bg-[#fff9f6] overflow-visible'>
 

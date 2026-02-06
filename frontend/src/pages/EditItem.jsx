@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react'
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaUtensils } from "react-icons/fa";
 import { useState } from 'react';
-import { useRef } from 'react';
 import axios from 'axios';
 import { serverUrl } from '../App';
 import { setMyShopData } from '../redux/ownerSlice';
 import { ClipLoader } from 'react-spinners';
 function EditItem() {
     const navigate = useNavigate()
-    const { myShopData } = useSelector(state => state.owner)
     const {itemId}=useParams()
-    const [currentItem,setCurrentItem]=useState(null)
     const [name, setName] = useState("")
     const [price, setPrice] = useState(0)
     const [frontendImage, setFrontendImage] = useState("")
@@ -56,6 +53,7 @@ function EditItem() {
             setLoading(false)
             navigate("/")
         } catch (error) {
+            console.error('Error editing item:', error)
             setLoading(false)
         }
     }
@@ -64,22 +62,19 @@ function EditItem() {
   const handleGetItemById=async () => {
     try {
        const result=await axios.get(`${serverUrl}/api/item/get-by-id/${itemId}`,{withCredentials:true}) 
-       setCurrentItem(result.data)
-
+       const item = result.data
+       setName(item.name || "")
+       setPrice(item.price || 0)
+       setCategory(item.category || "")
+       setFoodType(item.foodType || "")
+       setFrontendImage(item.image || "")
     } catch (error) {
-        
+        console.error('Error fetching item:', error)
     }
   }
   handleGetItemById()
     },[itemId])
 
-    useEffect(()=>{
-     setName(currentItem?.name || "")
-     setPrice(currentItem?.price || 0)
-     setCategory(currentItem?.category || "")
-     setFoodType(currentItem?.foodType || "")
-     setFrontendImage(currentItem?.image || "")
-    },[currentItem])
     return (
         <div className='flex justify-center flex-col items-center p-6 bg-gradient-to-br from-orange-50 relative to-white min-h-screen'>
             <div className='absolute top-[20px] left-[20px] z-[10] mb-[10px]' onClick={() => navigate("/")}>

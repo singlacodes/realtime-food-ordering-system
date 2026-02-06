@@ -12,18 +12,17 @@ function Shop() {
     const [items,setItems]=useState([])
     const [shop,setShop]=useState([])
     const navigate=useNavigate()
-    const handleShop=async () => {
-        try {
-           const result=await axios.get(`${serverUrl}/api/item/get-by-shop/${shopId}`,{withCredentials:true}) 
-           setShop(result.data.shop)
-           setItems(result.data.items)
-        } catch (error) {
-            
-        }
-    }
-
     useEffect(()=>{
-handleShop()
+        const fetchShop = async () => {
+            try {
+               const result=await axios.get(`${serverUrl}/api/item/get-by-shop/${shopId}`,{withCredentials:true}) 
+               setShop(result.data.shop)
+               setItems(result.data.items)
+            } catch (error) {
+                console.error('Error fetching shop:', error)
+            }
+        }
+        fetchShop()
     },[shopId])
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -50,7 +49,7 @@ handleShop()
 {items.length>0?(
     <div className='flex flex-wrap justify-center gap-8'>
         {items.map((item)=>(
-            <FoodCard data={item}/>
+            <FoodCard data={item} key={item._id}/>
         ))}
     </div>
 ):<p className='text-center text-gray-500 text-lg'>No Items Available</p>}

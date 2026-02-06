@@ -35,7 +35,7 @@ watchId=navigator.geolocation.watchPosition(
     })
   },
   (error)=>{
-    
+    console.error('Geolocation error:', error.message)
   },
   {
     enableHighAccuracy:true
@@ -55,32 +55,20 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
 
 
 
-  const getAssignments=async () => {
-    try {
-      const result=await axios.get(`${serverUrl}/api/order/get-assignments`,{withCredentials:true})
-      
-      setAvailableAssignments(result.data)
-    } catch (error) {
-      
-    }
-  }
-
-  const getCurrentOrder=async () => {
-     try {
-      const result=await axios.get(`${serverUrl}/api/order/get-current-order`,{withCredentials:true})
-    setCurrentOrder(result.data)
-    } catch (error) {
-      
-    }
-  }
-
-
   const acceptOrder=async (assignmentId) => {
     try {
-      const result=await axios.get(`${serverUrl}/api/order/accept-order/${assignmentId}`,{withCredentials:true})
-    await getCurrentOrder()
+      await axios.get(`${serverUrl}/api/order/accept-order/${assignmentId}`,{withCredentials:true})
+    const fetchCurrentOrder = async () => {
+      try {
+        const result=await axios.get(`${serverUrl}/api/order/get-current-order`,{withCredentials:true})
+        setCurrentOrder(result.data)
+      } catch (error) {
+        console.error('Error fetching current order:', error)
+      }
+    }
+    await fetchCurrentOrder()
     } catch (error) {
-      
+      console.error('Error accepting order:', error)
     }
   }
 
@@ -96,13 +84,13 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
   const sendOtp=async () => {
     setLoading(true)
     try {
-      const result=await axios.post(`${serverUrl}/api/order/send-delivery-otp`,{
+      await axios.post(`${serverUrl}/api/order/send-delivery-otp`,{
         orderId:currentOrder._id,shopOrderId:currentOrder.shopOrder._id
       },{withCredentials:true})
       setLoading(false)
        setShowOtpBox(true)
     } catch (error) {
-      
+      console.error('Error sending OTP:', error)
       setLoading(false)
     }
   }
@@ -115,26 +103,42 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
     setMessage(result.data.message)
     location.reload()
     } catch (error) {
-      
+      console.error('Error verifying OTP:', error)
     }
   }
 
-
-   const handleTodayDeliveries=async () => {
-    
-    try {
-      const result=await axios.get(`${serverUrl}/api/order/get-today-deliveries`,{withCredentials:true})
-   setTodayDeliveries(result.data)
-    } catch (error) {
-      
-    }
-  }
- 
 
   useEffect(()=>{
-getAssignments()
-getCurrentOrder()
-handleTodayDeliveries()
+    const getAssignments=async () => {
+      try {
+        const result=await axios.get(`${serverUrl}/api/order/get-assignments`,{withCredentials:true})
+        setAvailableAssignments(result.data)
+      } catch (error) {
+        console.error('Error fetching assignments:', error)
+      }
+    }
+
+    const getCurrentOrder=async () => {
+      try {
+        const result=await axios.get(`${serverUrl}/api/order/get-current-order`,{withCredentials:true})
+        setCurrentOrder(result.data)
+      } catch (error) {
+        console.error('Error fetching current order:', error)
+      }
+    }
+
+    const handleTodayDeliveries=async () => {
+      try {
+        const result=await axios.get(`${serverUrl}/api/order/get-today-deliveries`,{withCredentials:true})
+        setTodayDeliveries(result.data)
+      } catch (error) {
+        console.error('Error fetching today deliveries:', error)
+      }
+    }
+    
+    getAssignments()
+    getCurrentOrder()
+    handleTodayDeliveries()
   },[userData])
   return (
     <div className='w-screen min-h-screen flex flex-col gap-5 items-center bg-[#fff9f6] overflow-y-auto'>

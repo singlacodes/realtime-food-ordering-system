@@ -13,14 +13,6 @@ function TrackOrderPage() {
     const navigate = useNavigate()
     const {socket}=useSelector(state=>state.user)
     const [liveLocations,setLiveLocations]=useState({})
-    const handleGetOrder = async () => {
-        try {
-            const result = await axios.get(`${serverUrl}/api/order/get-order-by-id/${orderId}`, { withCredentials: true })
-            setCurrentOrder(result.data)
-        } catch (error) {
-            
-        }
-    }
 
     useEffect(()=>{
 socket.on('updateDeliveryLocation',({deliveryBoyId,latitude,longitude})=>{
@@ -32,7 +24,15 @@ setLiveLocations(prev=>({
     },[socket])
 
     useEffect(() => {
-        handleGetOrder()
+        const fetchOrder = async () => {
+            try {
+                const result = await axios.get(`${serverUrl}/api/order/get-order-by-id/${orderId}`, { withCredentials: true })
+                setCurrentOrder(result.data)
+            } catch (error) {
+                console.error('Error fetching order:', error)
+            }
+        }
+        fetchOrder()
     }, [orderId])
     return (
         <div className='max-w-4xl mx-auto p-4 flex flex-col gap-6'>

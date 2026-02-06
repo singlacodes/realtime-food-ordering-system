@@ -16,7 +16,7 @@ const [loading,setLoading]=useState(false)
   const handleSendOtp=async () => {
     setLoading(true)
     try {
-      const result=await axios.post(`${serverUrl}/api/auth/send-otp`,{email},{withCredentials:true})
+      await axios.post(`${serverUrl}/api/auth/send-otp`,{email},{withCredentials:true})
       setErr("")
       setStep(2)
       setLoading(false)
@@ -28,7 +28,7 @@ const [loading,setLoading]=useState(false)
   const handleVerifyOtp=async () => {
       setLoading(true)
     try {
-      const result=await axios.post(`${serverUrl}/api/auth/verify-otp`,{email,otp},{withCredentials:true})
+      await axios.post(`${serverUrl}/api/auth/verify-otp`,{email,otp},{withCredentials:true})
       setErr("")
       setStep(3)
         setLoading(false)
@@ -43,7 +43,7 @@ const [loading,setLoading]=useState(false)
     }
     setLoading(true)
     try {
-      const result=await axios.post(`${serverUrl}/api/auth/reset-password`,{email,newPassword},{withCredentials:true})
+      await axios.post(`${serverUrl}/api/auth/reset-password`,{email,newPassword},{withCredentials:true})
       setErr("")
         setLoading(false)
       navigate("/signin")

@@ -1,17 +1,15 @@
 import React from 'react'
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaUtensils } from "react-icons/fa";
 import { useState } from 'react';
-import { useRef } from 'react';
 import axios from 'axios';
 import { serverUrl } from '../App';
 import { setMyShopData } from '../redux/ownerSlice';
 import { ClipLoader } from 'react-spinners';
 function AddItem() {
     const navigate = useNavigate()
-    const { myShopData } = useSelector(state => state.owner)
     const [loading,setLoading]=useState(false)
     const [name, setName] = useState("")
     const [price, setPrice] = useState(0)
@@ -54,6 +52,7 @@ function AddItem() {
            setLoading(false)
            navigate("/")
         } catch (error) {
+            console.error('Error adding item:', error)
             setLoading(false)
         }
     }

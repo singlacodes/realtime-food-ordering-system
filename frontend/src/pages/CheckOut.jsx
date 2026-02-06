@@ -13,10 +13,10 @@ import axios from 'axios';
 import { FaMobileScreenButton } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { serverUrl } from '../App';
-import { addMyOrder, setTotalAmount } from '../redux/userSlice';
+import { addMyOrder } from '../redux/userSlice';
 function RecenterMap({ location }) {
+  const map = useMap()
   if (location.lat && location.lon) {
-    const map = useMap()
     map.setView([location.lat, location.lon], 16, { animate: true })
   }
   return null
@@ -59,7 +59,7 @@ function CheckOut() {
       const result = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&format=json&apiKey=${apiKey}`)
       dispatch(setAddress(result?.data?.results[0].address_line2))
     } catch (error) {
-      
+      console.error('Error getting address:', error)
     }
   }
 
@@ -69,7 +69,7 @@ function CheckOut() {
       const { lat, lon } = result.data.features[0].properties
       dispatch(setLocation({ lat, lon }))
     } catch (error) {
-      
+      console.error('Error getting coordinates:', error)
     }
   }
 
@@ -96,7 +96,7 @@ function CheckOut() {
        }
     
     } catch (error) {
-      
+      console.error('Error placing order:', error)
     }
   }
 
@@ -118,7 +118,7 @@ const openRazorpayWindow=(orderId,razorOrder)=>{
         dispatch(addMyOrder(result.data))
       navigate("/order-placed")
   } catch (error) {
-    
+    console.error('Error verifying payment:', error)
   }
  }
   }

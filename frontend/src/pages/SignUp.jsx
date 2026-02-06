@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
 function SignUp() {
     const primaryColor = "#ff4d2d";
-    const hoverColor = "#e64323";
     const bgColor = "#fff9f6";
     const borderColor = "#ddd";
     const [showPassword, setShowPassword] = useState(false)
@@ -56,7 +55,7 @@ function SignUp() {
     },{withCredentials:true})
    dispatch(setUserData(data))
   } catch (error) {
-    
+    console.error('Error with Google auth:', error)
   }
      }
     return (

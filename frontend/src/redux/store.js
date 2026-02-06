@@ -8,5 +8,12 @@ export const store=configureStore({
         user:userSlice,
         owner:ownerSlice,
         map:mapSlice
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: ['user/setSocket'],
+                ignoredPaths: ['user.socket'],
+            },
+        }),
 })

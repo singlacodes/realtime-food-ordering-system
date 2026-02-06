@@ -4,7 +4,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import UserOrderCard from '../components/UserOrderCard';
 import OwnerOrderCard from '../components/OwnerOrderCard';
-import { setMyOrders, updateOrderStatus, updateRealtimeOrderStatus } from '../redux/userSlice';
+import { setMyOrders, updateRealtimeOrderStatus } from '../redux/userSlice';
 
 
 function MyOrders() {
@@ -28,7 +28,7 @@ return ()=>{
   socket?.off('newOrder')
   socket?.off('update-status')
 }
-  },[socket])
+  },[socket, dispatch, myOrders, userData._id])
 
 
 
