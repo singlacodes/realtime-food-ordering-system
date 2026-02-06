@@ -18,7 +18,7 @@ function Shop() {
            setShop(result.data.shop)
            setItems(result.data.items)
         } catch (error) {
-            console.log(error)
+            
         }
     }
 

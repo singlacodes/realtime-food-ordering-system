@@ -59,7 +59,7 @@ function CheckOut() {
       const result = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&format=json&apiKey=${apiKey}`)
       dispatch(setAddress(result?.data?.results[0].address_line2))
     } catch (error) {
-      console.log(error)
+      
     }
   }
 
@@ -69,7 +69,7 @@ function CheckOut() {
       const { lat, lon } = result.data.features[0].properties
       dispatch(setLocation({ lat, lon }))
     } catch (error) {
-      console.log(error)
+      
     }
   }
 
@@ -96,7 +96,7 @@ function CheckOut() {
        }
     
     } catch (error) {
-      console.log(error)
+      
     }
   }
 
@@ -106,7 +106,7 @@ const openRazorpayWindow=(orderId,razorOrder)=>{
  key:import.meta.env.VITE_RAZORPAY_KEY_ID,
  amount:razorOrder.amount,
  currency:'INR',
- name:"Vingo",
+ name:"CafeBytes",
  description:"Food Delivery Website",
  order_id:razorOrder.id,
  handler:async function (response) {
@@ -118,7 +118,7 @@ const openRazorpayWindow=(orderId,razorOrder)=>{
         dispatch(addMyOrder(result.data))
       navigate("/order-placed")
   } catch (error) {
-    console.log(error)
+    
   }
  }
   }

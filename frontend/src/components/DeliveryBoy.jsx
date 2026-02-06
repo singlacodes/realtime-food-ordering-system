@@ -23,7 +23,8 @@ const [message,setMessage]=useState("")
 if(!socket || userData.role!=="deliveryBoy") return
 let watchId
 if(navigator.geolocation){
-watchId=navigator.geolocation.watchPosition((position)=>{
+watchId=navigator.geolocation.watchPosition(
+  (position)=>{
     const latitude=position.coords.latitude
     const longitude=position.coords.longitude
     setDeliveryBoyLocation({lat:latitude,lon:longitude})
@@ -32,13 +33,14 @@ watchId=navigator.geolocation.watchPosition((position)=>{
       longitude,
       userId:userData._id
     })
-  }),
+  },
   (error)=>{
-    console.log(error)
+    
   },
   {
     enableHighAccuracy:true
   }
+)
 }
 
 return ()=>{
@@ -59,7 +61,7 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
       
       setAvailableAssignments(result.data)
     } catch (error) {
-      console.log(error)
+      
     }
   }
 
@@ -68,7 +70,7 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
       const result=await axios.get(`${serverUrl}/api/order/get-current-order`,{withCredentials:true})
     setCurrentOrder(result.data)
     } catch (error) {
-      console.log(error)
+      
     }
   }
 
@@ -76,10 +78,9 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
   const acceptOrder=async (assignmentId) => {
     try {
       const result=await axios.get(`${serverUrl}/api/order/accept-order/${assignmentId}`,{withCredentials:true})
-    console.log(result.data)
     await getCurrentOrder()
     } catch (error) {
-      console.log(error)
+      
     }
   }
 
@@ -100,9 +101,8 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
       },{withCredentials:true})
       setLoading(false)
        setShowOtpBox(true)
-    console.log(result.data)
     } catch (error) {
-      console.log(error)
+      
       setLoading(false)
     }
   }
@@ -112,11 +112,10 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
       const result=await axios.post(`${serverUrl}/api/order/verify-delivery-otp`,{
         orderId:currentOrder._id,shopOrderId:currentOrder.shopOrder._id,otp
       },{withCredentials:true})
-    console.log(result.data)
     setMessage(result.data.message)
     location.reload()
     } catch (error) {
-      console.log(error)
+      
     }
   }
 
@@ -125,10 +124,9 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
     
     try {
       const result=await axios.get(`${serverUrl}/api/order/get-today-deliveries`,{withCredentials:true})
-    console.log(result.data)
    setTodayDeliveries(result.data)
     } catch (error) {
-      console.log(error)
+      
     }
   }
  

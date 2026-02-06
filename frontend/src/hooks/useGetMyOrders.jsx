@@ -17,7 +17,7 @@ function useGetMyOrders() {
 
 
     } catch (error) {
-        console.log(error)
+        
     }
 }
   fetchOrders()

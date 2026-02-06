@@ -17,7 +17,6 @@ const [loading,setLoading]=useState(false)
     setLoading(true)
     try {
       const result=await axios.post(`${serverUrl}/api/auth/send-otp`,{email},{withCredentials:true})
-      console.log(result)
       setErr("")
       setStep(2)
       setLoading(false)
@@ -30,7 +29,6 @@ const [loading,setLoading]=useState(false)
       setLoading(true)
     try {
       const result=await axios.post(`${serverUrl}/api/auth/verify-otp`,{email,otp},{withCredentials:true})
-      console.log(result)
       setErr("")
       setStep(3)
         setLoading(false)
@@ -47,7 +45,6 @@ const [loading,setLoading]=useState(false)
     try {
       const result=await axios.post(`${serverUrl}/api/auth/reset-password`,{email,newPassword},{withCredentials:true})
       setErr("")
-      console.log(result)
         setLoading(false)
       navigate("/signin")
     } catch (error) {

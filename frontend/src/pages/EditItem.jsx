@@ -56,7 +56,6 @@ function EditItem() {
             setLoading(false)
             navigate("/")
         } catch (error) {
-            console.log(error)
             setLoading(false)
         }
     }
@@ -68,7 +67,7 @@ function EditItem() {
        setCurrentItem(result.data)
 
     } catch (error) {
-        console.log(error)
+        
     }
   }
   handleGetItemById()

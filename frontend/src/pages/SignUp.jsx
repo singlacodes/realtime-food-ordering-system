@@ -56,7 +56,7 @@ function SignUp() {
     },{withCredentials:true})
    dispatch(setUserData(data))
   } catch (error) {
-    console.log(error)
+    
   }
      }
     return (
@@ -64,7 +64,7 @@ function SignUp() {
             <div className={`bg-white rounded-xl shadow-lg w-full max-w-md p-8 border `} style={{
                 border: `1px solid ${borderColor}`
             }}>
-                <h1 className={`text-3xl font-bold mb-2 `} style={{ color: primaryColor }}>Vingo</h1>
+                <h1 className={`text-3xl font-bold mb-2 `} style={{ color: primaryColor }}>CafeBytes</h1>
                 <p className='text-gray-600 mb-8'> Create your account to get started with delicious food deliveries
                 </p>
 

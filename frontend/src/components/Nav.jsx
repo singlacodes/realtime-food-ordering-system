@@ -23,7 +23,7 @@ function Nav() {
             const result = await axios.get(`${serverUrl}/api/auth/signout`, { withCredentials: true })
             dispatch(setUserData(null))
         } catch (error) {
-            console.log(error)
+            
         }
     }
 
@@ -32,7 +32,7 @@ function Nav() {
         const result=await axios.get(`${serverUrl}/api/item/search-items?query=${query}&city=${currentCity}`,{withCredentials:true})
     dispatch(setSearchItems(result.data))
       } catch (error) {
-        console.log(error)
+        
       }
     }
 
@@ -61,7 +61,7 @@ handleSearchItems()
 
 
 
-            <h1 className='text-3xl font-bold mb-2 text-[#ff4d2d]'>Vingo</h1>
+            <h1 className='text-3xl font-bold mb-2 text-[#ff4d2d]'>CafeBytes</h1>
 
             
             {userData.role == "user" && <div className='md:w-[60%] lg:w-[40%] h-[70px] bg-white shadow-xl rounded-lg items-center gap-[20px] hidden md:flex'>

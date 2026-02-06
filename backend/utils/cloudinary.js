@@ -12,7 +12,7 @@ const uploadOnCloudinary = async (file) => {
         return result.secure_url
     } catch (error) {
         fs.unlinkSync(file)
-        console.log(error)
+        
     }
 }
 

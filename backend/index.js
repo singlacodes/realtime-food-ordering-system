@@ -45,6 +45,5 @@ app.use("/api/order",orderRouter)
 socketHandler(io)
 server.listen(port,()=>{
     connectDb()
-    console.log(`server started at ${port}`)
 })
 

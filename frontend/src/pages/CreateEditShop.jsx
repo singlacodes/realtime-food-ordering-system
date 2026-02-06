@@ -44,7 +44,6 @@ function CreateEditShop() {
           setLoading(false)
           navigate("/")
         } catch (error) {
-            console.log(error)
             setLoading(false)
         }
        }

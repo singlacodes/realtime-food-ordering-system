@@ -24,7 +24,7 @@ function UserOrderCard({ data }) {
                 ...prev, [itemId]: rating
             }))
         } catch (error) {
-            console.log(error)
+            
         }
     }
 
